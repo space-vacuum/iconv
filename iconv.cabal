@@ -24,11 +24,12 @@ library
                    bytestring == 0.9.* || ==0.10.*
   extensions:      ForeignFunctionInterface
   includes:        hsiconv.h
-  include-dirs:    cbits
+  include-dirs:    cbits, "C:\\GnuWin32\\include"
   c-sources:       cbits/hsiconv.c
-  if os(darwin) || os(freebsd)
+  -- if os(darwin) || os(freebsd)
     -- on many systems the iconv api is part of the standard C library
     -- but on some others we have to link to an external libiconv:
-    extra-libraries: iconv
-
+  extra-libraries: iconv
+  extra-lib-dirs:  "C:\\GnuWin32\\lib"
+  
   ghc-options: -Wall
