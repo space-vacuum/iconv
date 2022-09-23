@@ -43,7 +43,7 @@ module Codec.Text.IConv.Internal (
   trace
   ) where
 
-import Foreign hiding (unsafePerformIO)
+import Foreign
 import Foreign.C
 import qualified Data.ByteString.Internal as S
 import System.IO.Unsafe (unsafeInterleaveIO, unsafePerformIO)
@@ -210,12 +210,11 @@ instance Functor IConv where
 instance Applicative IConv where
   pure  = returnI
   (<*>) = ap
+  (*>)  = thenI
 
 instance Monad IConv where
   (>>=)  = bindI
 --  m >>= f = (m `bindI` \a -> consistencyCheck `thenI` returnI a) `bindI` f
-  (>>)   = thenI
-  return = returnI
 
 returnI :: a -> IConv a
 returnI a = I $ \_ bufs -> return (bufs, a)
